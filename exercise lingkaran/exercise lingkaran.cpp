@@ -1,20 +1,74 @@
-// exercise lingkaran.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+using namespace std;
 
-int main()
-{
-    std::cout << "Hello World!\n";
+class bidangDatar {
+private:
+	int x;		//variable untuk menyimpan input dari lingkaran maupun bujursangkar
+public:
+	bidangDatar() {		//kontruktor
+		x = 0;
+	}
+	virtual void input() {}		//menerima dan mengirim input melalui setX untuk disimpan di variable x
+	virtual float Luas(int a) { return 0;}		//menghitung luas
+	virtual float Keliling(int a) { return 0;}		//menghitung keliling
+	void setX(int a) {		//memberi atau mengirim nilai dalam x(enkapsulasi)
+		this-> x = a; 
+	}
+	int getX() {		//membaca atau mengambil nilai dalam x(enkapsulasi)
+		return x;
+	}
+};
+
+class Lingkaran : public bidangDatar {		//inheritance
+public :
+	void input() {
+		int jejari;
+		cout << "Lingkaran dibuat" << endl;
+		cout << "Masukkan jejari : ";
+		cin >> jejari;
+		setX(jejari);
+	}
+	float Luas(int a) {
+		return 3.14 * a * a;
+	}
+	float Keliling(int a) {
+		return 2 * 3.14 * a;
+	}
+};
+
+class Bujursangkar : public bidangDatar {		//inheritance
+public:
+	void input() {
+		int sisi;
+		cout << "Bujursangkar dibuat" << endl;
+		cout << "Masukkan sisi : ";
+		cin >> sisi;
+		setX(sisi);
+	}
+	float Luas(int a) {
+		return a * a;
+	}
+	float Keliling(int a) {
+		return 4 * a;
+	}
+};
+
+int main() {
+	bidangDatar* objek;
+
+	objek = new Lingkaran;		//Lingkaran 
+	objek->input(); 
+	cout << "Luas Lingkaran = " << objek->Luas(objek->getX()) << endl; 
+	cout << "Keliling Lingkaran = " << objek->Keliling(objek->getX()) << endl; 
+	delete objek; 
+
+	cout << endl;
+
+	objek = new Bujursangkar;		//Bujursangkar 
+	objek->input();  
+	cout << "Luas Bujursangkar = " << objek->Luas(objek->getX()) << endl; 
+	cout << "Keliling Bujursangkar = " << objek->Keliling(objek->getX()) << endl; 
+	delete objek; 
+
+	return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
